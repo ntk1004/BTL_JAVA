@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Library Management System - Add Category</title>
+    <th:block th:insert="~{fragments/head :: head}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{fragments/navigation :: navigation}"></th:block>
+
+<div class="container">
+    <h1 class="display-2 text-center mt-2">Thêm thể loại</h1>
+
+    <form class="my-4" method="POST" th:action="@{/categories/saveCategory}">
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="categoryName">Tên thể loại</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="categoryName" required th:field="*{categoryPayload.name}" type="text">
+            </div>
+        </div>
+
+        <button class="btn btn-lg btn-success" type="submit">Thêm thể loại</button>
+    </form>
+
+    <a th:href="@{/categories}"> Quay lại</a>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

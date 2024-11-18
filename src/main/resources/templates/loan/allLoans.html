@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Library Management System - Loans</title>
+    <th:block th:insert="~{fragments/head :: head}"></th:block>
+</head>
+<body>
+<th:block th:insert="~{fragments/navigation :: navigation}"></th:block>
+
+<div class="container">
+    <h1 class="display-2 text-center mt-2" th:if="${loanType == 'all' || loanType == null}">Mượn sách</h1>
+    <h1 class="display-2 text-center mt-2" th:if="${loanType == 'previous'}">Các sách mượn hiện tại</h1>
+    <h1 class="display-2 text-center mt-2" th:if="${loanType == 'current'}">Các sách mượn trước đây</h1>
+
+    <h1 class="display-6 text-center mt-2"
+        th:if="${member != null}"
+        th:text="${'For member: ' + member.firstName + ' ' + member.lastName + ' (' + member.email + ')'}"
+    ></h1>
+    <h1 class="display-6 text-center mt-2"
+        th:if="${book != null}"
+        th:text="${'For book: ' + book.work.title + ' (' + book.isbn + ')'}"
+    ></h1>
+
+    <div class="mt-2" th:if="${loans.size() > 0}">
+        <form id="loanSearchForm"
+              th:action="${memberId == null && bookId == null ? '/loans' : (memberId == null ? '/loans/book/' + bookId : '/loans/' + memberId + '/' + loanType)}"
+        >
+            <div class="row g-2 my-3">
+                <div class="col-sm">
+                    <div class="form-floating">
+                        <select class="form-select" id="pageSize" name="size"
+                                onchange="changePageSize()" th:value="${pageSize}"
+                        >
+                            <option th:selected="${3 == pageSize}" th:text="3" th:value="3"></option>
+                            <option th:selected="${6 == pageSize}" th:text="6" th:value="6"></option>
+                            <option th:selected="${9 == pageSize}" th:text="9" th:value="9"></option>
+                        </select>
+                        <label for="pageSize">Số mục trên mỗi trang</label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary" id="btnClear">Xoá lựa chọn</button>
+        </form>
+
+        <div class="table-responsive mt-4">
+            <table class="table table-hover align-middle">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Thành viên</th>
+                    <th scope="col">Thủ thư</th>
+                    <th scope="col">
+                        <a class="text-decoration-none text-dark"
+                           th:href="@{'/loans?'
+                      + 'page=' + ${currentPage} + '&size=' + ${pageSize}
+                      + ${sortField != null ? '&sort=' + 'dateIssued' + ',' + (sortField == 'dateIssued' ? reverseSortDirection : sortDirection) : ''}}"
+                           th:if="${memberId == null && bookId == null}"
+                        >
+                            Ngày mượn
+                            <i class="bi bi-sort-up"
+                               th:if="${(sortField == 'dateIssued' && sortDirection == 'asc') || sortField != 'dateIssued'}"
+                            ></i>
+                            <i class="bi bi-sort-down"
+                               th:if="${sortField == 'dateIssued' && sortDirection == 'desc'}"></i>
+                        </a>
+                        <a class="text-decoration-none text-dark"
+                           th:href="@{'/loans/' + ${memberId} + '/' + ${loanType} + '?'
+                      + 'page=' + ${currentPage} + '&size=' + ${pageSize}
+                      + ${sortField != null ? '&sort=' + 'dateIssued' + ',' + (sortField == 'dateIssued' ? reverseSortDirection : sortDirection) : ''}}"
+                           th:if="${memberId != null}"
+                        >
+                            Ngày mượn
+                            <i class="bi bi-sort-up"
+                               th:if="${(sortField == 'dateIssued' && sortDirection == 'asc') || sortField != 'dateIssued'}"
+                            ></i>
+                            <i class="bi bi-sort-down"
+                               th:if="${sortField == 'dateIssued' && sortDirection == 'desc'}"></i>
+                        </a>
+                        <a class="text-decoration-none text-dark"
+                           th:href="@{'/loans/book/' + ${bookId} + '?'
+                      + 'page=' + ${currentPage} + '&size=' + ${pageSize}
+                      + ${sortField != null ? '&sort=' + 'dateIssued' + ',' + (sortField == 'dateIssued' ? reverseSortDirection : sortDirection) : ''}}"
+                           th:if="${bookId != null}"
+                        >
+                           Ngày mượn
+                            <i class="bi bi-sort-up"
+                               th:if="${(sortField == 'dateIssued' && sortDirection == 'asc') || sortField != 'dateIssued'}"
+                            ></i>
+                            <i class="bi bi-sort-down"
+                               th:if="${sortField == 'dateIssued' && sortDirection == 'desc'}"></i>
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a class="text-decoration-none text-dark"
+                           th:href="@{'/loans?'
+                      + 'page=' + ${currentPage} + '&size=' + ${pageSize}
+                      + ${sortField != null ? '&sort=' + 'dateReturned' + ',' + (sortField == 'dateReturned' ? reverseSortDirection : sortDirection) : ''}}"
+                           th:if="${memberId == null && bookId == null}"
+                        >
+                            Ngày trả lại
+                            <i class="bi bi-sort-up"
+                               th:if="${(sortField == 'dateReturned' && sortDirection == 'asc') || sortField != 'dateReturned'}"
+                            ></i>
+                            <i class="bi bi-sort-down"
+                               th:if="${sortField == 'dateReturned' && sortDirection == 'desc'}"></i>
+                        </a>
+                        <a class="text-decoration-none text-dark"
+                           th:href="@{'/loans/' + ${memberId} + '/' + ${loanType} + '?'
+                      + 'page=' + ${currentPage} + '&size=' + ${pageSize}
+                      + ${sortField != null ? '&sort=' + 'dateReturned' + ',' + (sortField == 'dateReturned' ? reverseSortDirection : sortDirection) : ''}}"
+                           th:if="${memberId != null}"
+                        >
+                            Ngày trả lại
+                            <i class="bi bi-sort-up"
+                               th:if="${(sortField == 'dateReturned' && sortDirection == 'asc') || sortField != 'dateReturned'}"
+                            ></i>
+                            <i class="bi bi-sort-down"
+                               th:if="${sortField == 'dateReturned' && sortDirection == 'desc'}"></i>
+                        </a>
+                        <a class="text-decoration-none text-dark"
+                           th:href="@{'/loans/book/' + ${bookId} + '?'
+                      + 'page=' + ${currentPage} + '&size=' + ${pageSize}
+                      + ${sortField != null ? '&sort=' + 'dateReturned' + ',' + (sortField == 'dateReturned' ? reverseSortDirection : sortDirection) : ''}}"
+                           th:if="${bookId != null}"
+                        >
+                            Ngày trả lại
+                            <i class="bi bi-sort-up"
+                               th:if="${(sortField == 'dateReturned' && sortDirection == 'asc') || sortField != 'dateReturned'}"
+                            ></i>
+                            <i class="bi bi-sort-down"
+                               th:if="${sortField == 'dateReturned' && sortDirection == 'desc'}"></i>
+                        </a>
+                    </th>
+                    <th scope="col">Book</th>
+                    <th scope="col" th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')')}">
+                        Action
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="loan : ${loans}">
+                    <th scope="row" th:text="${loan.id}"></th>
+                    <td th:text="${loan.member.firstName + ' ' + loan.member.lastName}"></td>
+                    <td th:text="${loan.librarian.firstName + ' ' + loan.librarian.lastName}"></td>
+                    <td th:text="${loan.dateIssued.toString()}"></td>
+                    <td>
+                        <span th:if="${loan.dateReturned != null}" th:text="${loan.dateReturned.toString()}"></span>
+                        <span th:unless="${loan.dateReturned != null}">Vẫn đang cho vay</span>
+                    </td>
+                    <td th:text="${loan.book.work.title}"></td>
+                    <td th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')')}">
+                        <a class="btn btn-primary" role="button"
+                           th:href="@{/loans/{memberId}/current(memberId=${loan.member.id})}"
+                           title="Current Loans"
+                        >
+                            Các sách mượn hiện tại
+                        </a>
+                        <a class="btn btn-primary" role="button"
+                           th:href="@{/loans/{memberId}/previous(memberId=${loan.member.id})}"
+                           title="Previous Loans"
+                        >
+                           Các sách mượn trước đây
+                        </a>
+                        <a class="btn btn-secondary" th:href="@{/loans/{bookId}/end(bookId=${loan.book.id})}"
+                           th:if="${loan.dateReturned == null}"
+                        >
+                            <i class="bi bi-person-fill-down"></i> Kết thúc mượn
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item" th:if="${currentPage > 1}">
+                        <a class="page-link" th:href="@{'/loans?'
+                     + 'page=' + ${currentPage - 1} + '&size=' + ${pageSize}
+                     + ${sortField != null && sortDirection != '' ? '&sort=' + sortField + ',' + sortDirection : ''}}"
+                           th:if="${memberId == null && bookId == null}"
+                        >
+                            Trước
+                        </a>
+                        <a class="page-link" th:href="@{'/loans/' + ${memberId} + '/' + ${loanType} + '?'
+                    + 'page=' + ${currentPage - 1} + '&size=' + ${pageSize}
+                    + ${sortField != null && sortDirection != '' ? '&sort=' + sortField + ',' + sortDirection : ''}}"
+                           th:if="${memberId != null}"
+                        >
+                            Trước
+                        </a>
+                        <a class="page-link" th:href="@{'/loans/book/' + ${bookId} + '?'
+                    + 'page=' + ${currentPage - 1} + '&size=' + ${pageSize}
+                    + ${sortField != null && sortDirection != '' ? '&sort=' + sortField + ',' + sortDirection : ''}}"
+                           th:if="${bookId != null}"
+                        >
+                            Trước
+                        </a>
+                    </li>
+                    <li class="page-item" th:if="${currentPage != totalPages}">
+                        <a class="page-link" th:href="@{'/loans?'
+                     + 'page=' + ${currentPage + 1} + '&size=' + ${pageSize}
+                     + ${sortField != null && sortDirection != '' ? '&sort=' + sortField + ',' + sortDirection : ''}}"
+                           th:if="${memberId == null and bookId == null}"
+                        >
+                            Kế tiếp
+                        </a>
+                        <a class="page-link" th:href="@{'/loans/' + ${memberId} + '/' + ${loanType} + '?'
+                    + 'page=' + ${currentPage + 1} + '&size=' + ${pageSize}
+                    + ${sortField != null && sortDirection != '' ? '&sort=' + sortField + ',' + sortDirection : ''}}"
+                           th:if="${memberId != null}"
+                        >
+                            Kế tiếp
+                        </a>
+                        <a class="page-link" th:href="@{'/loans/book/' + ${bookId} + '?'
+                    + 'page=' + ${currentPage + 1} + '&size=' + ${pageSize}
+                    + ${sortField != null && sortDirection != '' ? '&sort=' + sortField + ',' + sortDirection : ''}}"
+                           th:if="${bookId != null}"
+                        >
+                            Kế tiếp
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div th:unless="${loans.size() > 0}">
+        <p class="lead text-center">
+            Không tìm thấy Sách mượn nào
+        </p>
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-lg btn-secondary"
+               role="button" th:href="@{'/loans'}" th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')')}"
+            >
+                Back
+            </a>
+            <a class="btn btn-lg btn-secondary"
+               role="button" th:href="@{'/loans/myLoans'}" th:if="${#authorization.expression('hasAuthority(''MEMBER'')')}"
+            >
+                Back
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnClear").on("click", function (e) {
+            e.preventDefault();
+            $("#keyword").text("");
+            window.location = "[[${memberId == null && bookId == null ? '/loans' : (memberId == null ? '/loans/book/' + bookId : '/loans/' + memberId + '/' + loanType)}]]";
+        });
+    });
+
+    function changePageSize() {
+        $("#loanSearchForm").submit();
+    }
+</script>
+</body>
+</html>
