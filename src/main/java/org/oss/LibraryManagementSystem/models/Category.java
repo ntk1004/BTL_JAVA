@@ -20,7 +20,7 @@ public class Category {
     private Integer id;
 
     @Column(name = "name")
-    @NotNull(message = "name shouldn't be null")
+    @NotNull(message = "name không thể là null")
     private String name;
 
     public Category(String name) {

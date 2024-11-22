@@ -1,4 +1,4 @@
-package org.oss.LibraryManagementSystem.controllers;
+package org.oss.LibraryManagementSystem.dto.controllers;
 
 import org.oss.LibraryManagementSystem.dto.AuthorPayload;
 import org.oss.LibraryManagementSystem.repositories.AuthorRepository;

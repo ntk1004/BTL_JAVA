@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Library Management System - Loans</title>
+    <title>Hệ thống quản lý thư viện - Mượn sách</title>
     <th:block th:insert="~{fragments/head :: head}"></th:block>
 </head>
 <body>
@@ -14,11 +14,11 @@
 
     <h1 class="display-6 text-center mt-2"
         th:if="${member != null}"
-        th:text="${'For member: ' + member.firstName + ' ' + member.lastName + ' (' + member.email + ')'}"
+        th:text="${'Thành viên: ' + member.code + ' ' + member.name + ' (' + member.email + ')'}"
     ></h1>
     <h1 class="display-6 text-center mt-2"
         th:if="${book != null}"
-        th:text="${'For book: ' + book.work.title + ' (' + book.isbn + ')'}"
+        th:text="${'Cuốn sách: ' + book.work.title + ' (' + book.isbn + ')'}"
     ></h1>
 
     <div class="mt-2" th:if="${loans.size() > 0}">
@@ -132,7 +132,7 @@
                                th:if="${sortField == 'dateReturned' && sortDirection == 'desc'}"></i>
                         </a>
                     </th>
-                    <th scope="col">Book</th>
+                    <th scope="col">Sách</th>
                     <th scope="col" th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')')}">
                         Action
                     </th>
@@ -141,8 +141,8 @@
                 <tbody>
                 <tr th:each="loan : ${loans}">
                     <th scope="row" th:text="${loan.id}"></th>
-                    <td th:text="${loan.member.firstName + ' ' + loan.member.lastName}"></td>
-                    <td th:text="${loan.librarian.firstName + ' ' + loan.librarian.lastName}"></td>
+                    <td th:text="${loan.member.code + ' ' + loan.member.name}"></td>
+                    <td th:text="${loan.librarian.code + ' ' + loan.librarian.name}"></td>
                     <td th:text="${loan.dateIssued.toString()}"></td>
                     <td>
                         <span th:if="${loan.dateReturned != null}" th:text="${loan.dateReturned.toString()}"></span>
@@ -152,13 +152,13 @@
                     <td th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')')}">
                         <a class="btn btn-primary" role="button"
                            th:href="@{/loans/{memberId}/current(memberId=${loan.member.id})}"
-                           title="Current Loans"
+                           title="Các sách mượn hiện tại"
                         >
                             Các sách mượn hiện tại
                         </a>
                         <a class="btn btn-primary" role="button"
                            th:href="@{/loans/{memberId}/previous(memberId=${loan.member.id})}"
-                           title="Previous Loans"
+                           title="Các sách mượn trước đây"
                         >
                            Các sách mượn trước đây
                         </a>

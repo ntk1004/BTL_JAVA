@@ -21,11 +21,11 @@ public class Work {
     private Integer id;
 
     @Column(name = "title")
-    @NotNull(message = "title shouldn't be null")
+    @NotNull(message = "title không thể là null")
     private String title;
 
     @Column(name = "description")
-    @NotNull(message = "description shouldn't be null")
+    @NotNull(message = "description không thể là null")
     private String description;
 
     @ManyToMany

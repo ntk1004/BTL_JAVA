@@ -20,11 +20,11 @@ public class Author {
     private Integer id;
 
     @Column(name = "first_name")
-    @NotNull(message = "first_name shouldn't be null")
+    @NotNull(message = "first_name không thể là null")
     private String firstName;
 
     @Column(name = "last_name")
-    @NotNull(message = "last_name shouldn't be null")
+    @NotNull(message = "last_name không thể là null")
     private String lastName;
 
     public Author(String firstName, String lastName) {

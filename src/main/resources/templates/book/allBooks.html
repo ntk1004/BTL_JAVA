@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Library Management System - Books</title>
+    <title>Hệ thống quản lý thư viện - Sách</title>
     <th:block th:insert="~{fragments/head :: head}"></th:block>
 </head>
 <body>
@@ -13,7 +13,7 @@
 
     <div class="d-flex justify-content-end my-2"
          th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')')}">
-        <a class="btn btn-lg btn-success" th:href="@{/books/add}" title="Add Book">
+        <a class="btn btn-lg btn-success" th:href="@{/books/add}" title="Thêm sách">
             <i class="bi bi-plus-square-fill"></i>
         </a>
     </div>
@@ -24,7 +24,7 @@
                 <input class="form-control" id="keyword" name="keyword" placeholder="Tìm sách theo người xuất bản..."
                        th:value="${keyword}" type="search"
                 >
-                <button class="btn btn-outline-secondary" title="Search" type="submit">
+                <button class="btn btn-outline-secondary" title="Tìm kiếm" type="submit">
                     <i class="bi bi-search"></i>
                 </button>
             </div>
@@ -96,19 +96,19 @@
                            th:href="@{/loans/{bookId}/end(bookId=${book.id})}"
                            th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')') and !book.isAvailable()}"
                         >
-                            <i class="bi bi-person-fill-down"></i> End Loan
+                            <i class="bi bi-person-fill-down"></i> Kết thúc mượn
                         </a>
                         <a class="btn btn-outline-dark"
                            role="button"
                            th:href="@{/loans/book/{bookId}(bookId=${book.id})}"
-                           th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')')}" title="Show Loans"
+                           th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')')}" title="Hiển thị người mượn"
                         >
                             <i class="bi bi-eye-fill"></i> Hiển thị người mượn
                         </a>
                         <a class="btn btn-warning"
                            th:href="@{/books/{bookId}/edit(bookId=${book.id})}"
                            th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')') and book.isAvailable()}"
-                           title="Edit Book"
+                           title="Sửa sách"
                         >
                             <i class="bi bi-gear-fill"></i>
                         </a>
@@ -117,7 +117,7 @@
                            th:bookIsbn="${book.isbn}"
                            th:href="@{/books/{bookId}/delete(bookId=${book.id})}"
                            th:if="${#authorization.expression('hasAuthority(''ADMIN'')') and book.isAvailable()}"
-                           th:workTitle="${book.work.title}" title="Delete Book"
+                           th:workTitle="${book.work.title}" title="Xoá sách"
                         >
                             <i class="bi bi-trash3-fill"></i>
                         </a>
@@ -172,15 +172,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header border-bottom-0">
-                <h1 class="modal-title fs-5">Confirm Delete</h1>
+                <h1 class="modal-title fs-5">Xác nhận xoá</h1>
                 <button aria-label="Close" class="btn-close noBtn" data-bs-dismiss="modal" type="button"></button>
             </div>
             <div class="modal-body py-0">
                 <p><span id="confirmText"></span></p>
             </div>
             <div class="modal-footer flex-column border-top-0">
-                <a class="btn btn-lg btn-danger w-100 mx-0 mb-2" id="yesBtn" type="button">Delete book</a>
-                <button class="btn btn-lg btn-light w-100 mx-0 noBtn" data-bs-dismiss="modal" type="button">Close
+                <a class="btn btn-lg btn-danger w-100 mx-0 mb-2" id="yesBtn" type="button">Xoá sách</a>
+                <button class="btn btn-lg btn-light w-100 mx-0 noBtn" data-bs-dismiss="modal" type="button">Đóng
                 </button>
             </div>
         </div>
@@ -197,7 +197,7 @@
             let href = $(this).attr("href");
             let workTitle = $(this).attr("workTitle");
             let bookIsbn = $(this).attr("bookIsbn")
-            $("#confirmText").html("Are you sure you want to delete book: \<b\>" + workTitle + '  (ISBN: ' + bookIsbn + ")\<\/b\>?");
+            $("#confirmText").html("Bạn có chắc chắn muốn xoá sách: \<b\>" + workTitle + '  (ISBN: ' + bookIsbn + ")\<\/b\>?");
             $('#deleteModal #yesBtn').attr('href', href);
             $("#deleteModal").show();
         });

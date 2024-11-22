@@ -1,4 +1,4 @@
-package org.oss.LibraryManagementSystem.controllers;
+package org.oss.LibraryManagementSystem.dto.controllers;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;

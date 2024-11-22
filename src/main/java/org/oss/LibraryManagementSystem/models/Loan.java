@@ -29,7 +29,7 @@ public class Loan {
     private User librarian;
 
     @Column(name = "date_issued")
-    @NotNull(message = "date_issued shouldn't be null")
+    @NotNull(message = "date_issued không thể là null")
     private Timestamp dateIssued;
 
     @Column(name = "date_returned")

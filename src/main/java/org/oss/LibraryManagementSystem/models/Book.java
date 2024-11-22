@@ -26,15 +26,15 @@ public class Book {
     private Work work;
 
     @Column(name = "publisher_name")
-    @NotNull(message = "publisher_name shouldn't be null")
+    @NotNull(message = "publisher_name không thể là null")
     private String publisherName;
 
     @Column(name = "year_of_publishing")
-    @NotNull(message = "year_of_publishing shouldn't be null")
+    @NotNull(message = "year_of_publishing không thể là null")
     private Timestamp yearOfPublishing;
 
     @Column(name = "isbn")
-    @NotNull(message = "isbn shouldn't be null")
+    @NotNull(message = "isbn không thể là null")
     private String isbn;
 
     @Enumerated(EnumType.STRING)
@@ -42,7 +42,7 @@ public class Book {
     private Status bookStatus;
 
     @Column(name = "available")
-    @NotNull(message = "available shouldn't be null")
+    @NotNull(message = "available không thể là null")
     private boolean available;
 
     public Book(Work work, String publisherName, Timestamp yearOfPublishing, String isbn, Status bookStatus, boolean available) {

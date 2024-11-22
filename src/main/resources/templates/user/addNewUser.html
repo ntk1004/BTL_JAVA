@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Library Management System - Add User</title>
+    <title>Hệ thống quản lý thư viện - Thêm người dùng</title>
     <th:block th:insert="~{fragments/head :: head}"></th:block>
 </head>
 <body>
@@ -12,19 +12,19 @@
 
     <form class="my-4" method="POST" th:action="@{/users/saveUser}">
         <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="firstName">First Name</label>
+            <label class="col-sm-2 col-form-label" for="code">MSV</label>
             <div class="col-sm-10">
-                <input class="form-control" id="firstName" required th:field="*{userPayload.firstName}" type="text">
+                <input class="form-control" id="code" required th:field="*{userPayload.code}" type="text">
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="lastName">Last Name</label>
+            <label class="col-sm-2 col-form-label" for="Name">Name</label>
             <div class="col-sm-10">
-                <input class="form-control" id="lastName" required th:field="*{userPayload.lastName}" type="text">
+                <input class="form-control" id="Name" required th:field="*{userPayload.name}" type="text">
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="email">E-mail</label>
+            <label class="col-sm-2 col-form-label" for="email">Email</label>
             <div class="col-sm-10">
                 <input class="form-control" id="email" required th:field="*{userPayload.email}" type="email">
             </div>

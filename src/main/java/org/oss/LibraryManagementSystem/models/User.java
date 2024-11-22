@@ -24,13 +24,13 @@ public class User {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "first_name")
-    @NotNull(message = "first_name shouldn't be null")
-    private String firstName;
+    @Column(name = "code")
+    @NotNull(message = "code shouldn't be null")
+    private String code;
 
-    @Column(name = "last_name")
-    @NotNull(message = "last_name shouldn't be null")
-    private String lastName;
+    @Column(name = "name")
+    @NotNull(message = "name shouldn't be null")
+    private String name;
 
     @Column(name = "password")
     @NotNull(message = "password shouldn't be null")
@@ -59,9 +59,9 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    public User(String firstName, String lastName, String password, String email, Timestamp dateOfBirth, String contactNumber, boolean enabled, Set<Role> roles) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String code, String name, String password, String email, Timestamp dateOfBirth, String contactNumber, boolean enabled, Set<Role> roles) {
+        this.code = code;
+        this.name = name;
         this.password = password;
         this.email = email;
         this.dateOfBirth = dateOfBirth;

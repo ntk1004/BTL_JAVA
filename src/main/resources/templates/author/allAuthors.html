@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Library Management System - Authors</title>
+    <title>Hệ thống quản lý thư viện - Tác Giả</title>
     <th:block th:insert="~{fragments/head :: head}"></th:block>
 </head>
 <body>
@@ -11,7 +11,7 @@
     <h1 class="display-2 text-center mt-2">Tác Giả</h1>
 
     <div class="d-flex justify-content-end my-2">
-        <a class="btn btn-lg btn-success" th:href="@{/authors/add}" title="Add Author">
+        <a class="btn btn-lg btn-success" th:href="@{/authors/add}" title="Thêm tác giả">
             <i class="bi bi-person-fill-add"></i>
         </a>
     </div>
@@ -22,7 +22,7 @@
                 <input class="form-control" id="keyword" name="keyword" placeholder="Tìm kiếm tác giả..."
                        th:value="${keyword}" type="search"
                 >
-                <button class="btn btn-outline-secondary" title="Search" type="submit">
+                <button class="btn btn-outline-secondary" title="Tìm kiếm" type="submit">
                     <i class="bi bi-search"></i>
                 </button>
             </div>
@@ -88,7 +88,7 @@
                     <td th:text="${author.lastName}"></td>
                     <td>
                         <a class="btn btn-warning" th:href="@{/authors/{authorId}/edit(authorId=${author.id})}"
-                           title="Edit Author"
+                           title="Sửa tác giả"
                         >
                             <i class="bi bi-person-fill-gear"></i>
                         </a>
@@ -97,7 +97,7 @@
                            th:authorFirstName="${author.firstName}"
                            th:authorLastName="${author.lastName}"
                            th:href="@{/authors/{authorId}/delete(authorId=${author.id})}"
-                           th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}" title="Delete Author"
+                           th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}" title="Xoá tác giả"
                         >
                             <i class="bi bi-trash"></i>
                         </a>
@@ -147,7 +147,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header border-bottom-0">
-                <h1 class="modal-title fs-5">Confirm Delete</h1>
+                <h1 class="modal-title fs-5">Xác nhận xoá</h1>
                 <button aria-label="Close" class="btn-close noBtn" data-bs-dismiss="modal" type="button"></button>
             </div>
             <div class="modal-body py-0">
@@ -155,7 +155,7 @@
             </div>
             <div class="modal-footer flex-column border-top-0">
                 <a class="btn btn-lg btn-danger w-100 mx-0 mb-2" id="yesBtn" type="button">Xoá Tác Giả</a>
-                <button class="btn btn-lg btn-light w-100 mx-0 noBtn" data-bs-dismiss="modal" type="button">Close
+                <button class="btn btn-lg btn-light w-100 mx-0 noBtn" data-bs-dismiss="modal" type="button">Đóng
                 </button>
             </div>
         </div>
@@ -172,7 +172,7 @@
             let href = $(this).attr("href");
             let authorFirstName = $(this).attr("authorFirstName");
             let authorLastName = $(this).attr("authorLastName");
-            $("#confirmText").html("Are you sure you want to delete author: \<b\>" + authorFirstName + " " + authorLastName + "\<\/b\>?");
+            $("#confirmText").html("\n" + "Bạn có chắc chắn muốn xóa tác giả: \<b\>" + authorFirstName + " " + authorLastName + "\<\/b\>?");
             $('#deleteModal #yesBtn').attr('href', href);
             $("#deleteModal").show();
         });

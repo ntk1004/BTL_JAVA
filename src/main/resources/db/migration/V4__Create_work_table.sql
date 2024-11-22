@@ -1,5 +1,0 @@
-CREATE TABLE IF NOT EXISTS work (
-    id SERIAL NOT NULL PRIMARY KEY,
-    title VARCHAR NOT NULL,
-    description VARCHAR NOT NULL
-);

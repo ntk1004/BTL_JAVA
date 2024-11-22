@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Library Management System - Works</title>
+    <title>Hệ thống quản lý thư viện - Tác phẩm</title>
     <th:block th:insert="~{fragments/head :: head}"></th:block>
 </head>
 <body>
@@ -12,7 +12,7 @@
 
     <div class="d-flex justify-content-end my-2"
          th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')')}">
-        <a class="btn btn-lg btn-success" th:href="@{/works/add}" title="Add Work">
+        <a class="btn btn-lg btn-success" th:href="@{/works/add}" title="Thêm tác phẩm">
             <i class="bi bi-journal-plus"></i>
         </a>
     </div>
@@ -23,7 +23,7 @@
                 <input class="form-control" id="keyword" name="keyword" placeholder="Tìm tác phẩm theo tiêu đề..."
                        th:value="${keyword}" type="search"
                 >
-                <button class="btn btn-outline-secondary" title="Search" type="submit">
+                <button class="btn btn-outline-secondary" title="Tìm kiếm" type="submit">
                     <i class="bi bi-search"></i>
                 </button>
             </div>
@@ -70,7 +70,7 @@
                     + 'page=' + ${currentPage} + '&size=' + ${pageSize}
                     + ${sortField != null ? '&sort=' + 'title' + ',' + (sortField == 'title' ? reverseSortDirection : sortDirection) : ''}}"
                         >
-                            Title
+                            Tiêu đề
                             <i class="bi bi-sort-up" th:if="${sortDirection == 'asc'}"></i>
                             <i class="bi bi-sort-down" th:if="${sortDirection == 'desc'}"></i>
                         </a>
@@ -95,13 +95,13 @@
                     </td>
                     <td>
                         <a class="btn btn-primary" role="button"
-                           th:href="@{works/{workId}/books(workId=${work.id})}" title="Show Books"
+                           th:href="@{works/{workId}/books(workId=${work.id})}" title="Hiển thị tác phẩm"
                         >
                             <i class="bi bi-book-fill"></i>
                         </a>
                         <a class="btn btn-warning"
                            th:href="@{/works/{workId}/edit(workId=${work.id})}" th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')')}"
-                           title="Edit Work"
+                           title="Sửa tác phẩm"
                         >
                             <i class="bi bi-journal-album"></i>
                         </a>
@@ -109,7 +109,7 @@
                            role="button"
                            th:href="@{/works/{workId}/delete(workId=${work.id})}"
                            th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}"
-                           th:workTitle="${work.title}" title="Delete Work"
+                           th:workTitle="${work.title}" title="Xoá tác phẩm"
                         >
                             <i class="bi bi-journal-minus"></i>
                         </a>
@@ -129,7 +129,7 @@
                    + 'page=' + ${currentPage - 1} + '&size=' + ${pageSize}
                    + ${sortField != null && sortDirection != '' ? '&sort=' + sortField + ',' + sortDirection : ''}}"
                         >
-                            Previous
+                            Trước
                         </a>
                     </li>
                     <li class="page-item" th:if="${currentPage != totalPages}">
@@ -139,7 +139,7 @@
                    + 'page=' + ${currentPage + 1} + '&size=' + ${pageSize}
                    + ${sortField != null && sortDirection != '' ? '&sort=' + sortField + ',' + sortDirection : ''}}"
                         >
-                            Next
+                            Kế tiếp
                         </a>
                     </li>
                 </ul>
@@ -149,10 +149,10 @@
 
     <div th:unless="${works.size() > 0}">
         <p class="lead text-center">
-            No works found!
+            Không tìm thấy tác phẩm
         </p>
         <div class="d-flex justify-content-center">
-            <a class="btn btn-lg btn-secondary" role="button" th:href="@{'/works'}">Back</a>
+            <a class="btn btn-lg btn-secondary" role="button" th:href="@{'/works'}">Quay lại</a>
         </div>
     </div>
 </div>
@@ -161,15 +161,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header border-bottom-0">
-                <h1 class="modal-title fs-5">Confirm Delete</h1>
+                <h1 class="modal-title fs-5">Xác nhận xoá</h1>
                 <button aria-label="Close" class="btn-close noBtn" data-bs-dismiss="modal" type="button"></button>
             </div>
             <div class="modal-body py-0">
                 <p><span id="confirmText"></span></p>
             </div>
             <div class="modal-footer flex-column border-top-0">
-                <a class="btn btn-lg btn-danger w-100 mx-0 mb-2" id="yesBtn" type="button">Delete work</a>
-                <button class="btn btn-lg btn-light w-100 mx-0 noBtn" data-bs-dismiss="modal" type="button">Close
+                <a class="btn btn-lg btn-danger w-100 mx-0 mb-2" id="yesBtn" type="button">Xoá tác phẩm</a>
+                <button class="btn btn-lg btn-light w-100 mx-0 noBtn" data-bs-dismiss="modal" type="button">Đóng
                 </button>
             </div>
         </div>
@@ -187,7 +187,7 @@
             e.preventDefault();
             let href = $(this).attr("href");
             let workTitle = $(this).attr("workTitle");
-            $("#confirmText").html("Are you sure you want to delete work: \<b\>" + workTitle + "\<\/b\>?");
+            $("#confirmText").html("Bạn có chắc chắn muốn xóa tác phẩm: \<b\>" + workTitle + "\<\/b\>?");
             $('#deleteModal #yesBtn').attr('href', href);
             $("#deleteModal").show();
         });

@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
             pageUsers = userRepository.findByRolesEquals(role, paging);
         } else if (keyword != null) {
             if (Objects.equals(currentUserRoles.get(0), "ADMIN")) {
-                pageUsers = userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContainingAllIgnoreCase(keyword, keyword, keyword, paging);
+                pageUsers = userRepository.findByEmailContainingOrCodeContainingOrNameContainingAllIgnoreCase(keyword, keyword, keyword, paging);
             } else {
                 pageUsers = userRepository.findByRolesEqualsAndEmailContainingIgnoreCase(roleMember, keyword, paging);
             }
@@ -118,8 +118,8 @@ public class UserServiceImpl implements UserService {
 
         var user = new User();
 
-        user.setFirstName(userPayload.getFirstName());
-        user.setLastName(userPayload.getLastName());
+        user.setCode(userPayload.getCode());
+        user.setName(userPayload.getName());
         user.setEmail(userPayload.getEmail());
         user.setContactNumber(userPayload.getContactNumber());
 
@@ -147,8 +147,8 @@ public class UserServiceImpl implements UserService {
         var user = userRepository.findById(id).orElse(null);
 
         user.setId(userPayload.getId());
-        user.setFirstName(userPayload.getFirstName());
-        user.setLastName(userPayload.getLastName());
+        user.setCode(userPayload.getCode());
+        user.setName(userPayload.getName());
         user.setEmail(userPayload.getEmail());
         user.setContactNumber(userPayload.getContactNumber());
 

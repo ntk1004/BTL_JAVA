@@ -1,4 +1,4 @@
-package org.oss.LibraryManagementSystem.controllers;
+package org.oss.LibraryManagementSystem.dto.controllers;
 
 import jakarta.mail.MessagingException;
 import org.oss.LibraryManagementSystem.dto.UserPayload;
@@ -126,7 +126,7 @@ public class UserController {
         mailSender.setUsername("");
         mailSender.setPassword("");
 
-        var messageText = "<h1>Welcome</h1>" + "<p>" + user.getFirstName() + ' ' + user.getLastName() + ", welcome to Library Management System!" + "</p>" + "<h5>Happy reading!</h5>";
+        var messageText = "<h1>Welcome</h1>" + "<p>" + user.getCode() + ' ' + user.getName() + ", welcome to Library Management System!" + "</p>" + "<h5>Happy reading!</h5>";
 
         var props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
@@ -152,7 +152,7 @@ public class UserController {
         var roles = roleRepository.findAll();
         var roleUser = user.getRoles().stream().toList().get(0).getName();
         if (currentUserRoles.contains(new SimpleGrantedAuthority("LIBRARIAN")) && user.getRoles().contains(roleRepository.findByName("MEMBER")) || currentUserRoles.contains(new SimpleGrantedAuthority("ADMIN"))) {
-            model.addAttribute("userPayload", new UserPayload(user.getId(), user.getFirstName(), user.getLastName(), user.getPassword(), user.getEmail(), new Date(user.getDateOfBirth().getTime()), roleUser, user.getContactNumber()));
+            model.addAttribute("userPayload", new UserPayload(user.getId(), user.getCode(), user.getName(), user.getPassword(), user.getEmail(), new Date(user.getDateOfBirth().getTime()), roleUser, user.getContactNumber()));
             model.addAttribute("roleOptions", roles);
         }
 

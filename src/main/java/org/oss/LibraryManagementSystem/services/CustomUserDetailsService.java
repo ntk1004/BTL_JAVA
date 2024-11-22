@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         var user = userRepository.findByEmail(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("Không tìm thấy người dùng");
         }
 
         return new CustomUserDetails(user);

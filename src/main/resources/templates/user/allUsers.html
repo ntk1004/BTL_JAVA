@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Library Management System - Users</title>
+    <title>Hệ thống quản lý thư viện - Người sử dụng</title>
     <th:block th:insert="~{fragments/head :: head}"></th:block>
 </head>
 <body>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="d-flex justify-content-end my-2">
-        <a class="btn btn-lg btn-success" th:href="@{/users/add}" title="Add User">
+        <a class="btn btn-lg btn-success" th:href="@{/users/add}" title="Thêm người dùng">
             <i class="bi bi-person-fill-add"></i>
         </a>
     </div>
@@ -26,7 +26,7 @@
                 <input class="form-control" id="keyword" name="keyword" placeholder="Tìm kiếm người sử dụng..."
                        th:value="${keyword}" type="search"
                 >
-                <button class="btn btn-outline-secondary" title="Search" type="submit">
+                <button class="btn btn-outline-secondary" title="Tìm kiếm" type="submit">
                     <i class="bi bi-search"></i>
                 </button>
             </div>
@@ -74,31 +74,31 @@
                         <a class="text-decoration-none text-dark"
                            th:href="@{'/users?' + ${keyword != null && keyword != ''? 'keyword=' + keyword + '&' : ''}
                         + 'page=' + ${currentPage} + '&size=' + ${pageSize}
-                        + ${sortField != null ? '&sort=' + 'firstName' + ',' + (sortField == 'firstName' ? reverseSortDirection : sortDirection) : ''}}"
+                        + ${sortField != null ? '&sort=' + 'code' + ',' + (sortField == 'code' ? reverseSortDirection : sortDirection) : ''}}"
                         >
-                            First Name
+                           MSV
                             <i class="bi bi-sort-up"
-                               th:if="${(sortField == 'firstName' && sortDirection == 'asc') || sortField != 'firstName'}"
+                               th:if="${(sortField == 'code' && sortDirection == 'asc') || sortField != 'code'}"
                             ></i>
                             <i class="bi bi-sort-down"
-                               th:if="${sortField == 'firstName' && sortDirection == 'desc'}"></i>
+                               th:if="${sortField == 'code' && sortDirection == 'desc'}"></i>
                         </a>
                     </th>
                     <th scope="col">
                         <a class="text-decoration-none text-dark"
                            th:href="@{'/users?' + ${keyword != null && keyword != '' ? 'keyword=' + keyword + '&' : ''}
                         + 'page=' + ${currentPage} + '&size=' + ${pageSize}
-                        + ${sortField != null ? '&sort=' + 'lastName' + ',' + (sortField == 'lastName' ? reverseSortDirection : sortDirection) : ''}}"
+                        + ${sortField != null ? '&sort=' + 'name' + ',' + (sortField == 'name' ? reverseSortDirection : sortDirection) : ''}}"
                         >
-                            Last Name
+                            Name
                             <i class="bi bi-sort-up"
-                               th:if="${(sortField == 'lastName' && sortDirection == 'asc') || sortField != 'lastName'}"
+                               th:if="${(sortField == 'name' && sortDirection == 'asc') || sortField != 'name'}"
                             ></i>
                             <i class="bi bi-sort-down"
-                               th:if="${sortField == 'lastName' && sortDirection == 'desc'}"></i>
+                               th:if="${sortField == 'name' && sortDirection == 'desc'}"></i>
                         </a>
                     </th>
-                    <th scope="col">E-mail</th>
+                    <th scope="col">Email</th>
                     <th scope="col">
                         <a class="text-decoration-none text-dark"
                            th:href="@{'/users?' + ${keyword != null && keyword != '' ? 'keyword=' + keyword + '&' : ''}
@@ -122,8 +122,8 @@
                 <tbody class="table-group-divider">
                 <tr th:each="user : ${users}">
                     <th scope="row" th:text="${user.id}"></th>
-                    <td th:text="${user.firstName}"></td>
-                    <td th:text="${user.lastName}"></td>
+                    <td th:text="${user.code}"></td>
+                    <td th:text="${user.name}"></td>
                     <td><a th:href="'mailto:' + ${user.email}" th:text="${user.email}"></a></td>
                     <td th:text="${user.dateOfBirth}"></td>
                     <td><a th:href="'tel:' + ${user.contactNumber}" th:text="${user.contactNumber}"></a></td>
@@ -132,12 +132,12 @@
                     </td>
                     <td>
                         <a class="btn btn-primary" role="button" th:href="@{/users/{userId}(userId=${user.id})}"
-                           title="User Details"
+                           title="Chi tiết người dùng"
                         >
                             <i class="bi bi-person-lines-fill"></i>
                         </a>
                         <a class="btn btn-warning" th:href="@{/users/{userId}/edit(userId=${user.id})}"
-                           title="Edit User"
+                           title="Chỉnh sửa người dùng"
                         >
                             <i class="bi bi-person-fill-gear"></i>
                         </a>
@@ -146,8 +146,8 @@
                            th:href="@{/users/{userId}/delete(userId=${user.id})}"
                            th:if="${currentUserRole == 'ADMIN' && #authentication.name != user.email}"
                            th:userEmail="${user.email}"
-                           th:userFirstName="${user.firstName}"
-                           th:userLastName="${user.lastName}" title="Delete User"
+                           th:userCode="${user.code}"
+                           th:userName="${user.name}" title="Xoá người dùng"
                         >
                             <i class="bi bi-person-fill-dash"></i>
                         </a>
@@ -156,15 +156,15 @@
                         <div th:if="${user.roles.stream().findFirst().get().getName() == 'MEMBER'}">
                             <a class="btn btn-primary" role="button"
                                th:href="@{/loans/{memberId}/current(memberId=${user.id})}"
-                               title="Current Loans"
+                               title="Các sách mượn hiện tại"
                             >
-                               Sách mượn hiện tại
+                                Các sách mượn hiện tại
                             </a>
                             <a class="btn btn-primary" role="button"
                                th:href="@{/loans/{memberId}/previous(memberId=${user.id})}"
-                               title="Previous Loans"
+                               title="Các sách mượn trước đây"
                             >
-                                Sách mượn trước đây
+                               Các sách mượn trước đây
                             </a>
                         </div>
                     </td>
@@ -214,15 +214,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header border-bottom-0">
-                <h1 class="modal-title fs-5">Confirm Delete</h1>
+                <h1 class="modal-title fs-5">Xác nhận xoá</h1>
                 <button aria-label="Close" class="btn-close noBtn" data-bs-dismiss="modal" type="button"></button>
             </div>
             <div class="modal-body py-0">
                 <p><span id="confirmText"></span></p>
             </div>
             <div class="modal-footer flex-column border-top-0">
-                <a class="btn btn-lg btn-danger w-100 mx-0 mb-2" id="yesBtn" type="button">Delete user</a>
-                <button class="btn btn-lg btn-light w-100 mx-0 noBtn" data-bs-dismiss="modal" type="button">Close
+                <a class="btn btn-lg btn-danger w-100 mx-0 mb-2" id="yesBtn" type="button">Xoá người dùng</a>
+                <button class="btn btn-lg btn-light w-100 mx-0 noBtn" data-bs-dismiss="modal" type="button">Đóng
                 </button>
             </div>
         </div>
@@ -238,9 +238,9 @@
             e.preventDefault();
             let href = $(this).attr("href");
             let userEmail = $(this).attr("userEmail");
-            let userFirstName = $(this).attr("userFirstName");
-            let userLastName = $(this).attr("userLastName");
-            $("#confirmText").html("Are you sure you want to delete user: \<b\>" + userFirstName + " " + userLastName + " (" + userEmail + ")\<\/b\>?");
+            let userCode = $(this).attr("userCode");
+            let userName = $(this).attr("userName");
+            $("#confirmText").html("Bạn có chắc chắn muốn xoá người dùng: \<b\>" + userCode + " " + userName + " (" + userEmail + ")\<\/b\>?");
             $('#deleteModal #yesBtn').attr('href', href);
             $("#deleteModal").show();
         });
