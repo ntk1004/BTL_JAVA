@@ -83,7 +83,7 @@ public class BookController {
     public String deleteBook(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
             bookService.deleteBookById(id);
-            redirectAttributes.addFlashAttribute("message", "The book with id=" + id + " has been deleted successfully!");
+            redirectAttributes.addFlashAttribute("message", "Sách có id=" + id + " đã được xóa thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }

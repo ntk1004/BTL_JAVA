@@ -69,7 +69,7 @@ public class CategoryController {
     public String deleteCategory(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
             categoryService.deleteCategoryById(id);
-            redirectAttributes.addFlashAttribute("message", "The category with id=" + id + " has been deleted successfully!");
+            redirectAttributes.addFlashAttribute("message", "Thể loại có id=" + id + " đã được xóa thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }

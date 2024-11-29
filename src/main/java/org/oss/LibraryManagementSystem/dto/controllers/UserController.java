@@ -94,7 +94,7 @@ public class UserController {
     public String deleteUser(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
             userService.deleteUserById(id);
-            redirectAttributes.addFlashAttribute("message", "The user with id=" + id + " has been deleted successfully!");
+            redirectAttributes.addFlashAttribute("message", "Người dùng có id=" + id + " đã được xóa thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }

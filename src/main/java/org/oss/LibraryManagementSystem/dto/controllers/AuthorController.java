@@ -70,7 +70,7 @@ public class AuthorController {
     public String deleteAuthor(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
             authorService.deleteAuthorById(id);
-            redirectAttributes.addFlashAttribute("message", "The author with id=" + id + " has been deleted successfully!");
+            redirectAttributes.addFlashAttribute("message", "Tác giả có id=" + id + " đã được xóa thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }

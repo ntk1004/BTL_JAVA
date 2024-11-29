@@ -117,7 +117,7 @@ public class WorkController {
     public String deleteWork(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
             workService.deleteWorkById(id);
-            redirectAttributes.addFlashAttribute("message", "The work with id=" + id + " has been deleted successfully!");
+            redirectAttributes.addFlashAttribute("message", "Tác phẩm với id=" + id + " đã được xóa thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
