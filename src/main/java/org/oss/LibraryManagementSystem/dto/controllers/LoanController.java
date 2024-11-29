@@ -68,7 +68,7 @@ public class LoanController {
         mailSender.setUsername("");
         mailSender.setPassword("");
 
-        var messageText = "<h1>Sach bat dau cho muon</h1>" + "<p>" + "Sach <b>" + loan.getBook().getWork().getTitle() + "</b>" + " da duoc ban muon vao ngay   <b>" + loan.getDateIssued() + "</b>." + "</p>";
+        var messageText = "<h1>Da bat dau cho muon</h1>" + "<p>" + "Sach <b>" + loan.getBook().getWork().getTitle() + "</b>" + " da duoc ban muon vao ngay   <b>" + loan.getDateIssued() + "</b>." + "</p>";
 
         var props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
@@ -78,7 +78,7 @@ public class LoanController {
         mimeMessageHelper.setFrom("HeThongQuanLyThuVien@gmail.com");
         mimeMessageHelper.setText(messageText, true);
         mimeMessageHelper.setTo(loan.getMember().getEmail());
-        mimeMessageHelper.setSubject("Sách bắt đầu cho mượn");
+        mimeMessageHelper.setSubject("Đã bắt đầu cho mượn");
 
         mailSender.send(mimeMessage);
 
@@ -97,7 +97,7 @@ public class LoanController {
         mailSender.setUsername("");
         mailSender.setPassword("");
 
-        var messageText = "<h1>Ket thuc muon sach</h1>" + "<p>" + "Ban da tra lai cuon sach <b>" + loan.getBook().getWork().getTitle() + "</b>" + " vao ngay <b>" + loan.getDateReturned() + "</b>." + "</p>";
+        var messageText = "<h1>Da ket thuc cho muon</h1>" + "<p>" + "Ban da tra lai cuon sach <b>" + loan.getBook().getWork().getTitle() + "</b>" + " vao ngay <b>" + loan.getDateReturned() + "</b>." + "</p>";
 
         var props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
@@ -107,7 +107,7 @@ public class LoanController {
         mimeMessageHelper.setFrom("HeThongQuanLyThuVien@gmail.com");
         mimeMessageHelper.setText(messageText, true);
         mimeMessageHelper.setTo(loan.getMember().getEmail());
-        mimeMessageHelper.setSubject("Kết thúc sách mượn");
+        mimeMessageHelper.setSubject("Đã kết thúc cho mượn");
 
         mailSender.send(mimeMessage);
 

@@ -133,7 +133,7 @@ public class UserController {
 
         var mimeMessage = mailSender.createMimeMessage();
         var mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-        mimeMessageHelper.setFrom("librarymanagementsystem@oss.org");
+        mimeMessageHelper.setFrom("HeThongQuanLyThuVien@gmail.com");
         mimeMessageHelper.setText(messageText, true);
         mimeMessageHelper.setTo(user.getEmail());
         mimeMessageHelper.setSubject("Chào mừng đến với Hệ thống quản lý thư viện");
