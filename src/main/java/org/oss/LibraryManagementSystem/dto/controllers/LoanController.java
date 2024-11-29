@@ -68,17 +68,17 @@ public class LoanController {
         mailSender.setUsername("");
         mailSender.setPassword("");
 
-        var messageText = "<h1>Loan Started</h1>" + "<p>" + "Book <b>" + loan.getBook().getWork().getTitle() + "</b>" + " was issued on your name on date <b>" + loan.getDateIssued() + "</b>." + "</p>";
+        var messageText = "<h1>Sach bat dau cho muon</h1>" + "<p>" + "Sach <b>" + loan.getBook().getWork().getTitle() + "</b>" + " da duoc ban muon vao ngay   <b>" + loan.getDateIssued() + "</b>." + "</p>";
 
         var props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
 
         var mimeMessage = mailSender.createMimeMessage();
         var mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-        mimeMessageHelper.setFrom("librarymanagementsystem@oss.org");
+        mimeMessageHelper.setFrom("HeThongQuanLyThuVien@gmail.com");
         mimeMessageHelper.setText(messageText, true);
         mimeMessageHelper.setTo(loan.getMember().getEmail());
-        mimeMessageHelper.setSubject("Loan Started");
+        mimeMessageHelper.setSubject("Sách bắt đầu cho mượn");
 
         mailSender.send(mimeMessage);
 
@@ -97,17 +97,17 @@ public class LoanController {
         mailSender.setUsername("");
         mailSender.setPassword("");
 
-        var messageText = "<h1>Loan Ended</h1>" + "<p>" + "You returned book <b>" + loan.getBook().getWork().getTitle() + "</b>" + " on date <b>" + loan.getDateReturned() + "</b>." + "</p>";
+        var messageText = "<h1>Ket thuc muon sach</h1>" + "<p>" + "Ban da tra lai cuon sach <b>" + loan.getBook().getWork().getTitle() + "</b>" + " vao ngay <b>" + loan.getDateReturned() + "</b>." + "</p>";
 
         var props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
 
         var mimeMessage = mailSender.createMimeMessage();
         var mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-        mimeMessageHelper.setFrom("librarymanagementsystem@oss.org");
+        mimeMessageHelper.setFrom("HeThongQuanLyThuVien@gmail.com");
         mimeMessageHelper.setText(messageText, true);
         mimeMessageHelper.setTo(loan.getMember().getEmail());
-        mimeMessageHelper.setSubject("Loan Ended");
+        mimeMessageHelper.setSubject("Kết thúc sách mượn");
 
         mailSender.send(mimeMessage);
 

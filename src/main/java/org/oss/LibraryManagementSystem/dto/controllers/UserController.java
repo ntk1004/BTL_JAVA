@@ -126,7 +126,7 @@ public class UserController {
         mailSender.setUsername("");
         mailSender.setPassword("");
 
-        var messageText = "<h1>Welcome</h1>" + "<p>" + user.getFullName() + ' ' + user.getGender() + ", welcome to Library Management System!" + "</p>" + "<h5>Happy reading!</h5>";
+        var messageText = "<h1>Chao mung</h1>" + "<p>" + user.getFullName() +  ", chao mung den voi he thong thu vien quan ly!" + "</p>" + "<h5>chuc ban doc sach vui ve!</h5>";
 
         var props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
@@ -136,7 +136,7 @@ public class UserController {
         mimeMessageHelper.setFrom("librarymanagementsystem@oss.org");
         mimeMessageHelper.setText(messageText, true);
         mimeMessageHelper.setTo(user.getEmail());
-        mimeMessageHelper.setSubject("Welcome to Library Management System");
+        mimeMessageHelper.setSubject("Chào mừng đến với Hệ thống quản lý thư viện");
 
         mailSender.send(mimeMessage);
 
