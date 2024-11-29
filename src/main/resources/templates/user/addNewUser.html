@@ -12,15 +12,15 @@
 
     <form class="my-4" method="POST" th:action="@{/users/saveUser}">
         <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="code">MSV</label>
+            <label class="col-sm-2 col-form-label" for="fullName">Họ và Tên</label>
             <div class="col-sm-10">
-                <input class="form-control" id="code" required th:field="*{userPayload.code}" type="text">
+                <input class="form-control" id="fullName" required th:field="*{userPayload.fullName}" type="text">
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="Name">Name</label>
+            <label class="col-sm-2 col-form-label" for="gender">Giới tính</label>
             <div class="col-sm-10">
-                <input class="form-control" id="Name" required th:field="*{userPayload.name}" type="text">
+                <input class="form-control" id="gender" required th:field="*{userPayload.gender}" type="text">
             </div>
         </div>
         <div class="row mb-3">

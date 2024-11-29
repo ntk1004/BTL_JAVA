@@ -9,12 +9,12 @@
 
 <div class="container">
     <h1 class="display-2 text-center mt-2" th:if="${loanType == 'all' || loanType == null}">Mượn sách</h1>
-    <h1 class="display-2 text-center mt-2" th:if="${loanType == 'previous'}">Các sách mượn hiện tại</h1>
-    <h1 class="display-2 text-center mt-2" th:if="${loanType == 'current'}">Các sách mượn trước đây</h1>
+    <h1 class="display-2 text-center mt-2" th:if="${loanType == 'previous'}">Các sách mượn trước đây</h1>
+    <h1 class="display-2 text-center mt-2" th:if="${loanType == 'current'}">Các sách mượn hiện tại</h1>
 
     <h1 class="display-6 text-center mt-2"
         th:if="${member != null}"
-        th:text="${'Thành viên: ' + member.code + ' ' + member.name + ' (' + member.email + ')'}"
+        th:text="${'Thành viên: ' + member.fullName + ' ' + member.gender + ' (' + member.email + ')'}"
     ></h1>
     <h1 class="display-6 text-center mt-2"
         th:if="${book != null}"
@@ -141,8 +141,8 @@
                 <tbody>
                 <tr th:each="loan : ${loans}">
                     <th scope="row" th:text="${loan.id}"></th>
-                    <td th:text="${loan.member.code + ' ' + loan.member.name}"></td>
-                    <td th:text="${loan.librarian.code + ' ' + loan.librarian.name}"></td>
+                    <td th:text="${loan.member.fullName}"></td>
+                    <td th:text="${loan.librarian.fullName}"></td>
                     <td th:text="${loan.dateIssued.toString()}"></td>
                     <td>
                         <span th:if="${loan.dateReturned != null}" th:text="${loan.dateReturned.toString()}"></span>
@@ -235,12 +235,12 @@
             <a class="btn btn-lg btn-secondary"
                role="button" th:href="@{'/loans'}" th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''LIBRARIAN'')')}"
             >
-                Back
+                Quay lại
             </a>
             <a class="btn btn-lg btn-secondary"
                role="button" th:href="@{'/loans/myLoans'}" th:if="${#authorization.expression('hasAuthority(''MEMBER'')')}"
             >
-                Back
+                Quay lại
             </a>
         </div>
     </div>

@@ -13,9 +13,9 @@ public class UserPayload {
 
     private Integer id;
 
-    private String code;
+    private String fullName;
 
-    private String name;
+    private String gender;
 
     private String password;
 

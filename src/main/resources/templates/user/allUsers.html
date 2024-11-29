@@ -74,30 +74,17 @@
                         <a class="text-decoration-none text-dark"
                            th:href="@{'/users?' + ${keyword != null && keyword != ''? 'keyword=' + keyword + '&' : ''}
                         + 'page=' + ${currentPage} + '&size=' + ${pageSize}
-                        + ${sortField != null ? '&sort=' + 'code' + ',' + (sortField == 'code' ? reverseSortDirection : sortDirection) : ''}}"
+                        + ${sortField != null ? '&sort=' + 'fullName' + ',' + (sortField == 'fullName' ? reverseSortDirection : sortDirection) : ''}}"
                         >
-                           MSV
+                          Họ và Tên
                             <i class="bi bi-sort-up"
-                               th:if="${(sortField == 'code' && sortDirection == 'asc') || sortField != 'code'}"
+                               th:if="${(sortField == 'fullName' && sortDirection == 'asc') || sortField != 'fullName'}"
                             ></i>
                             <i class="bi bi-sort-down"
-                               th:if="${sortField == 'code' && sortDirection == 'desc'}"></i>
+                               th:if="${sortField == 'fullName' && sortDirection == 'desc'}"></i>
                         </a>
                     </th>
-                    <th scope="col">
-                        <a class="text-decoration-none text-dark"
-                           th:href="@{'/users?' + ${keyword != null && keyword != '' ? 'keyword=' + keyword + '&' : ''}
-                        + 'page=' + ${currentPage} + '&size=' + ${pageSize}
-                        + ${sortField != null ? '&sort=' + 'name' + ',' + (sortField == 'name' ? reverseSortDirection : sortDirection) : ''}}"
-                        >
-                            Name
-                            <i class="bi bi-sort-up"
-                               th:if="${(sortField == 'name' && sortDirection == 'asc') || sortField != 'name'}"
-                            ></i>
-                            <i class="bi bi-sort-down"
-                               th:if="${sortField == 'name' && sortDirection == 'desc'}"></i>
-                        </a>
-                    </th>
+                    <th scope="col">Giới tính</th>
                     <th scope="col">Email</th>
                     <th scope="col">
                         <a class="text-decoration-none text-dark"
@@ -122,8 +109,8 @@
                 <tbody class="table-group-divider">
                 <tr th:each="user : ${users}">
                     <th scope="row" th:text="${user.id}"></th>
-                    <td th:text="${user.code}"></td>
-                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.fullName}"></td>
+                    <td th:text="${user.gender}"></td>
                     <td><a th:href="'mailto:' + ${user.email}" th:text="${user.email}"></a></td>
                     <td th:text="${user.dateOfBirth}"></td>
                     <td><a th:href="'tel:' + ${user.contactNumber}" th:text="${user.contactNumber}"></a></td>
@@ -146,8 +133,8 @@
                            th:href="@{/users/{userId}/delete(userId=${user.id})}"
                            th:if="${currentUserRole == 'ADMIN' && #authentication.name != user.email}"
                            th:userEmail="${user.email}"
-                           th:userCode="${user.code}"
-                           th:userName="${user.name}" title="Xoá người dùng"
+                           th:userFullName="${user.fullName}"
+                           th:userGender="${user.gender}" title="Xoá người dùng"
                         >
                             <i class="bi bi-person-fill-dash"></i>
                         </a>
@@ -238,9 +225,8 @@
             e.preventDefault();
             let href = $(this).attr("href");
             let userEmail = $(this).attr("userEmail");
-            let userCode = $(this).attr("userCode");
-            let userName = $(this).attr("userName");
-            $("#confirmText").html("Bạn có chắc chắn muốn xoá người dùng: \<b\>" + userCode + " " + userName + " (" + userEmail + ")\<\/b\>?");
+            let userFullName = $(this).attr("userFullName");
+            $("#confirmText").html("Bạn có chắc chắn muốn xoá người dùng: \<b\>" + userFullName +  " (" + userEmail + ")\<\/b\>?");
             $('#deleteModal #yesBtn').attr('href', href);
             $("#deleteModal").show();
         });

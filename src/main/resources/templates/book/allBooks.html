@@ -21,7 +21,7 @@
     <div class="mt-2" th:if="${books.size() > 0}">
         <form id="bookSearchForm" th:action="${workId == null ? '/books' : '/works/' + workId + '/books'}">
             <div class="input-group my-3">
-                <input class="form-control" id="keyword" name="keyword" placeholder="Tìm sách theo người xuất bản..."
+                <input class="form-control" id="keyword" name="keyword" placeholder="Tìm sách theo nhà xuất bản..."
                        th:value="${keyword}" type="search"
                 >
                 <button class="btn btn-outline-secondary" title="Tìm kiếm" type="submit">
@@ -81,7 +81,7 @@
                         <ul class="list-group list-group-flush my-2">
                             <li class="list-group-item" th:text="${'Mô tả: ' + book.work.description}"></li>
                             <li class="list-group-item" th:text="${'ISBN: ' + book.isbn}"></li>
-                            <li class="list-group-item" th:text="${'Người xuất bản: ' + book.publisherName}"></li>
+                            <li class="list-group-item" th:text="${'Nhà xuất bản: ' + book.publisherName}"></li>
                             <li class="list-group-item" th:text="${'Ngày xuất bản: ' + book.yearOfPublishing}"></li>
                             <li class="list-group-item" th:text="${'Trạng thái: ' + book.bookStatus}"></li>
                         </ul>

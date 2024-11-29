@@ -19,7 +19,7 @@
     <div class="mt-2" th:if="${categories.size() > 0}">
         <form id="categorySearchForm" th:action="@{/categories}">
             <div class="input-group my-3">
-                <input class="form-control" id="keyword" name="keyword" placeholder="Tìm Kiếm thể loại..."
+                <input class="form-control" id="keyword" name="keyword" placeholder="Tìm kiếm thể loại..."
                        th:value="${keyword}" type="search"
                 >
                 <button class="btn btn-outline-secondary" title="Search" type="submit">
