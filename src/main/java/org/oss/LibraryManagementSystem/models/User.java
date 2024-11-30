@@ -25,27 +25,27 @@ public class User {
     private Integer id;
 
     @Column(name = "full_name")
-    @NotNull(message = "code shouldn't be null")
+    @NotNull(message = "code không thể là null")
     private String fullName;
 
     @Column(name = "gender")
-    @NotNull(message = "name shouldn't be null")
+    @NotNull(message = "name không thể là null")
     private String gender;
 
     @Column(name = "password")
-    @NotNull(message = "password shouldn't be null")
+    @NotNull(message = "password không thể là null")
     private String password;
 
     @Column(name = "email")
-    @NotNull(message = "email shouldn't be null")
+    @NotNull(message = "email không thể là null")
     private String email;
 
     @Column(name = "date_of_birth")
-    @NotNull(message = "date_of_birth shouldn't be null")
+    @NotNull(message = "date_of_birth không thể là null")
     private Timestamp dateOfBirth;
 
     @Column(name = "contact_number")
-    @NotNull(message = "contact_number shouldn't be null")
+    @NotNull(message = "contact_number không thể là null")
     private String contactNumber;
 
     @Column(name = "enabled")
